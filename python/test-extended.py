@@ -40,7 +40,7 @@ while gpio.input("P", 7) == 1:
 	True
 print("Button pressed")
 
-exit()
+# exit()
 
 ######################################
 # TESTING HIGH VOLTAGE
