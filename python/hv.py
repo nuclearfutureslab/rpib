@@ -31,12 +31,13 @@ class hv:
         # if init = false, leave dac at existing level
         
     def setVoltage(self, voltage, ramp = True):
-        """Set specific voltage, either ramping or immediate. 
+        """
+        Set specific voltage, either ramping or immediate. 
         Ramping using 100 steps is default.
         """
         rampsteps = 100
         if voltage > 1600:
-            print "Maximal voltage is 1600"
+            print "Maximal voltage is 1600 V"
             return 0
         currentvoltage = self.getVoltage()
         self.voltageGoal = voltage
@@ -63,7 +64,8 @@ class hv:
         time.sleep(3)
                 
     def getVoltage(self):
-        """Returns current high voltage, using the voltage measured with 
+        """
+        Returns current high voltage, using the voltage measured with 
         the RedPitaya slow ADC.
         """
         # address = 0x40400000 + self.adc * 4

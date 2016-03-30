@@ -1,3 +1,4 @@
+
 from subprocess import call
 from subprocess import check_output
 
@@ -15,14 +16,20 @@ def initOutput(pn, pinno):
     else:
         print "Unknown pn, can only be 'p' or 'n'"
         return 0
+    
     # read current setting
+    
     statusstring = check_output(["monitor", address])
     status = int(statusstring.rstrip(), 0)
-    #convert pinno in bitmask
+    
+    # convert pinno in bitmask
+    
     bpin = 2 ** pinno
-    #new status is oldstaus and bitwise or 
+    # new status is oldstaus and bitwise or 
     newstatus = status | bpin
-    #set new status
+    
+    # set new status
+    
     call(["monitor", address, str(newstatus)])
             
 def initInput(pn, pinno):
