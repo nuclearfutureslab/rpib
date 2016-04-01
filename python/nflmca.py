@@ -8,7 +8,7 @@ def file_len(fname):
             pass
     return i + 1
 
-def readacquistionfile(filename, negativepulse = False, binary = True, process = True):
+def read_acquistion_file(filename, negativepulse = False, binary = True, process = True):
     if binary:
         fh = open(filename, "rb")
         header_datatype = np.dtype([('decimation','int32'), 
@@ -63,7 +63,7 @@ def readacquistionfile(filename, negativepulse = False, binary = True, process =
         print ""
         return [header, data]
 
-def asciispectrum(totaldata, rows, columns, scaling = 1, binmax = 1000000):
+def ascii_spectrum(totaldata, rows, columns, scaling = 1, binmax = 1000000):
     # make histogram
     spacer = 5
     binstep = binmax / (columns - spacer) # spacer to leave space for axis

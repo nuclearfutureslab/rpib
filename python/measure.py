@@ -1,4 +1,7 @@
-"""Measures simple spectrum, reads it after that and builds integrated values. At the end, plot an ASCII representation of the spectrum."""
+"""
+Measures simple spectrum, reads it after that and builds integrated values.
+At the end, plot an ASCII representation of the spectrum.
+"""
 
 import os
 import shutil
@@ -10,12 +13,12 @@ import hv
 
 hvcontrol = hv.hv()
 hvcontrol.enable()
-hvcontrol.setVoltage(1000, ramp = True)
+hvcontrol.set_voltage(1000, ramp = True)
 
 measurementtime = 300 # Time in seconds
 outputfile = "out1"
 
-# measure
+# Measure spectrum
 
 # Option -t: Trigger method (1-7); Method 1 forces immediate trigger
 # Option -u: Trigger voltage must be calibrated/adjusted for current Red Pitaya
@@ -25,23 +28,18 @@ calllist = callstring.split(" ")
 
 call(calllist) # Execute command (C code); Python script will wait here
 
-hvcontrol.setVoltage(0, ramp = True)
+hvcontrol.set_voltage(0, ramp = True)
 hvcontrol.disable()
 
 # readout step file
 
-a = nflmca.readacquistionfile(outputfile + ".txt", negativepulse = True, binary = False)
+a = nflmca.read_acquistion_file(outputfile + ".txt", negativepulse = True, binary = False)
 a = a[1]
 a = a[(a > 0)] # Drop negative integrals 
 
-# get current rows
-
-rows, columns = os.popen('stty size', 'r').read().split()
-rows = int(rows) - 4 # leave some space
+rows, columns = os.popen('stty size', 'r').read().split() # Get current rows
+rows = int(rows) - 4 # Leave some space
 columns = int(columns)
 
-# plot
-
-nflmca.asciispectrum(a, rows, columns, 1)
-                            
+nflmca.ascii_spectrum(a, rows, columns, 1) # Plot                      
 np.savetxt(outputfile + "-integrals.txt", a)
