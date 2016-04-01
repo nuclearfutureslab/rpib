@@ -8,6 +8,13 @@ def file_len(fname):
             pass
     return i + 1
 
+def correctnegative(a):
+    if(a >= 8192):
+        return a - 16384;
+    else:
+        return a;
+correctnegative = np.vectorize(correctnegative)
+
 def read_acquistion_file(filename, negativepulse = False, binary = True, process = True):
     if binary:
         fh = open(filename, "rb")
@@ -65,7 +72,7 @@ def read_acquistion_file(filename, negativepulse = False, binary = True, process
 
 def ascii_spectrum(totaldata, rows, columns, scaling = 1, binmax = 1000000):
     # make histogram
-    spacer = 5
+    spacer = 6
     binstep = binmax / (columns - spacer) # spacer to leave space for axis
     histdata = np.histogram(totaldata, bins=range(0,binmax,binstep))[0]
 

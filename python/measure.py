@@ -15,7 +15,7 @@ hvcontrol = hv.hv()
 hvcontrol.enable()
 hvcontrol.set_voltage(1000, ramp = True)
 
-measurementtime = 300 # Time in seconds
+measurementtime = 60 # Time in seconds
 outputfile = "out1"
 
 # Measure spectrum

@@ -12,5 +12,5 @@ rows = int(rows) - 4 # leave some space
 columns = int(columns)
 
 scaling = 1.0
-scaling = nflmca.asciispectrum(totaldata, rows, columns, scaling)
+scaling = nflmca.ascii_spectrum(totaldata, rows, columns, scaling)
 

@@ -22,7 +22,7 @@ outputfilename = sys.argv[4]
 
 hvcontrol = hv.hv()
 hvcontrol.enable()
-hvcontrol.setVoltage(1000, ramp = True)
+hvcontrol.set_voltage(1000, ramp = True)
 
 # measure command
 callstring ="./acquisition -t 3 -u " + str(triggervoltage) + " -p 32 -l 384 -f temp " + str(splittime)
@@ -52,7 +52,7 @@ for i in range(steps - 1):
     process = Popen(calllist, stdout=devnull, stderr=devnull)
     
     # readout step file
-    a = nflmca.readacquistionfile("read.txt", negativepulse = True, binary = False)
+    a = nflmca.read_acquistion_file("read.txt", negativepulse = True, binary = False)
     a = a[1]
     a = a[(a > 0)]
     totaldata = np.concatenate((totaldata, a))
@@ -65,7 +65,8 @@ for i in range(steps - 1):
     columns = int(columns)
 
     # plot
-    scaling = nflmca.asciispectrum(totaldata, rows, columns, scaling)
+    scaling = nflmca.ascii_spectrum(totaldata, rows, columns, scaling)
                             
-hvcontrol.setVoltage(0, ramp = True)
-np.savetxt("integrals.txt", totaldata)
+hvcontrol.set_voltage(0, ramp = True)
+np.savetxt(outputfilename + ".txt", totaldata)
+hvcontrol.disable()
