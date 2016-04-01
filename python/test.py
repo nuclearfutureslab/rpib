@@ -33,13 +33,13 @@ print "Enable HV Module"
 hvcontrol.enable()
 print "Ramp up to 1000 V"
 hvcontrol.set_voltage(1000, ramp = True)
-print "Current Voltage (measured): {:f}".format(hvcontrol.getVoltage())
+print "Current Voltage (measured): {:f}".format(hvcontrol.get_voltage())
 print "Wait 5 seconds"
 time.sleep(5)
-print "Current Voltage (measured): {:f}".format(hvcontrol.getVoltage())
+print "Current Voltage (measured): {:f}".format(hvcontrol.get_voltage())
 print "Wait 5 seconds"
 time.sleep(5)
-print "Current Voltage (measured): {:f}".format(hvcontrol.getVoltage())
+print "Current Voltage (measured): {:f}".format(hvcontrol.get_voltage())
 print "Ramp down to 0 V"
 hvcontrol.set_voltage(0, ramp = True)
 hvcontrol.disable()
