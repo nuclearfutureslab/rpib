@@ -21,6 +21,9 @@ def init_output(pn, pinno):
         address = "0x40000010"
     elif(pn == "n" or pn == "N"):
         address = "0x40000014"
+    elif(pn == "a" or pn == "A"):
+        # nothing to do for analog output
+        return 0
     else:
         print "Unknown pn, can only be 'p' or 'n'"
         return 0
@@ -87,6 +90,17 @@ def output(pn, pinno, level):
         address = "0x40000018"
     elif(pn == "n" or pn == "N"):
         address = "0x4000001c"
+    elif(pn == "a" or pn == "A"):
+        # special method for analog out
+        baseaddress = 0x40400020
+        address = "0x{:x}".format(baseaddress + pinno * 4)
+        if level == HIGH:
+            value = "0xFFFF0000"
+        else:
+            value = "0x00000000"
+        #print " ".join(["monitor", address, value])
+        call(["monitor", address, value])
+        return 0
     else:
         print "Unknown pn, can only be 'p' or 'n'"
         return 0
