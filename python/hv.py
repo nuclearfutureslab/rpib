@@ -8,19 +8,26 @@ from subprocess import check_output
 import time
 import gpio
 
+DAC_ADDRESS = 0x60
+
 class hv:
     
-    def __init__(self, enablepin = 1, adc = 0, init = True):
+    def __init__(self, enablepin = 7, adc = 0, init = True, display = -1):
         """
         Initialization: Set specified Turns HV off, sets DAC to zero.
         adc = number of Red Pitaya slow ADC to be used (0 - 3).
         enablepin = Number of the P-pin of Red Pitaya GPIO to be used as enable signal (0-7).
         """
 
+        self.display = display
         self.enablepin = enablepin
         self.adc = adc
         # set pin P<enablepin> as output
         gpio.init_output("P", self.enablepin)
+
+        if(self.display != -1):
+            gpio.init_output("N", self.display)
+            gpio.output("N", self.display, gpio.LOW)
 
         if init:
             # turn pin P<enablepin> off (low)
@@ -68,6 +75,11 @@ class hv:
         print "Wait 3 more seconds..."
         # wait 3 second cooldown
         time.sleep(3)
+
+        if(self.display != -1 and voltage != 0):
+            gpio.init_output("N", self.display)
+            gpio.output("N", self.display, gpio.LOW)
+
   
     # -----------------------------------------------------------------------
     # Read current voltage from HV module
@@ -114,7 +126,7 @@ class hv:
             return 0
         bytes = [(level >> 4) & 0xFF, (level << 4) & 0xFF]
         iword = hex(bytes[1] * 256 + bytes[0])
-        call(["i2cset", "-y", "0", "0x62", "0x40", str(iword), "w"])
+        call(["i2cset", "-y", "0", str(DAC_ADDRESS), "0x40", str(iword), "w"])
 
 # ---------------------------------------------------------------------------
 

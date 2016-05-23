@@ -18,8 +18,8 @@ while True:
         print "acquire 1"
     if gpio.input("P", 3) == 0:
         print "acquire 2"
-    # if gpio.input("P", 4) == 0:
-    #     print "acquire 3"
+    if gpio.input("P", 4) == 0:
+        print "acquire 3"
     if gpio.input("P", 0) == 0:
         print "hv button"
     if gpio.input("P", 1) == 0:
